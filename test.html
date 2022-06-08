@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      (function (window) {
+        addEvent(window, "message", function (message) {
+          try {
+            var data = JSON.parse(message.data);
+            var dataLayer = window.dataLayer || (window.dataLayer = []);
+            if (data.event) {
+              dataLayer.push({
+                event: data.event,
+                postMessageData: data,
+              });
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        });
+
+        // Cross-browser event listener
+        function addEvent(el, evt, fn) {
+          if (el.addEventListener) {
+            el.addEventListener(evt, fn);
+          } else if (el.attachEvent) {
+            el.attachEvent("on" + evt, function (evt) {
+              fn.call(el, evt);
+            });
+          } else if (
+            typeof el["on" + evt] === "undefined" ||
+            el["on" + evt] === null
+          ) {
+            el["on" + evt] = function (evt) {
+              fn.call(el, evt);
+            };
+          }
+        }
+      })(window);
+    </script>
+  </body>
+</html>

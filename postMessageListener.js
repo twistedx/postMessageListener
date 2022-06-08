@@ -12,7 +12,8 @@
         });
       }
     } catch (e) {
-      console.log(e);
+      //do nothing add me if you see an error
+      //console.log(e)
     }
   });
 
